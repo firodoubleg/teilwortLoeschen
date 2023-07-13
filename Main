@@ -1,0 +1,96 @@
+package QdL.Level_2;
+
+public class TeilwortLöschen_secondTry {
+
+	public static void main(String[] args) {
+		String w = "abcabcbf";
+		String v = "abc";
+		String[] vArray = {"abc", "bf"};
+		System.out.println(istTeilwortAnIndex(w, v, 5));
+		System.out.println(findeTeilwort(w, v));
+		System.out.println(löscheTeilwort(w, v));
+		System.out.println(löscheAlleTeilworte(w, vArray));
+	}
+
+	
+	
+	// i)
+	public static boolean istTeilwortAnIndex(String w, String v, int i) {
+		boolean match = true;
+		
+		if (i + (v.length()) > w.length()) {
+			System.out.println("Überlauf");
+			return false;
+		}
+		
+		for (int v_index = 0; v_index < v.length(); v_index++) {
+			
+			if (w.charAt(i + v_index) != v.charAt(v_index)) {
+				match = false;
+			}
+		}
+		return match;
+	}
+	
+	
+	
+	// ii)
+	public static int findeTeilwort(String w, String v) {
+		
+		for (int w_index = 0; w_index < w.length(); w_index++) 
+		{
+			boolean match = true;
+			for (int v_index = 0; v_index < v.length(); v_index++) 
+			{	
+				if (w_index + v.length() > w.length()){
+					return -1;
+				}
+				if (w.charAt(w_index+v_index) != v.charAt(v_index)) 
+				{
+					match = false;
+				}
+			}
+			if (match) 
+			{
+				return w_index;
+			}
+		}
+		return -1;
+	}
+	
+	
+	// iii)
+	public static String löscheTeilwort(String w, String v) {
+		int startindex = findeTeilwort(w,v);
+		String wortNeu = "";
+		
+		if (startindex != -1) {
+			for (int w_index = 0; w_index < w.length(); w_index++) {
+				
+				if (w_index == startindex) {
+					
+					for (w_index = startindex; w_index < startindex + (v.length()-1); w_index++) {
+						wortNeu += "";
+					}
+				}
+				else {
+					wortNeu += w.charAt(w_index);	
+				}
+				
+			}
+			return wortNeu;
+		}
+		return null;
+	}
+	
+	
+	// iv)
+	public static String löscheAlleTeilworte(String w, String[] vArray) {
+		String wort = w;
+		for (int i = 0; i < vArray.length; i++) {
+			wort = löscheTeilwort(wort, vArray[i]);
+		}
+		return wort;
+	}
+	
+}
